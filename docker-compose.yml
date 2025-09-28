@@ -30,5 +30,21 @@ services:
     volumes:
       - ./scrapper/app:/scrapper/app:rw
 
+  api:
+    build:
+      context: api
+      dockerfile: Dockerfile
+    container_name: actusafe-api
+    depends_on:
+      db:
+        condition: service_healthy
+    working_dir: /api/app
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+    volumes:
+      - ./api/app:/api/app:rw
+    ports:
+      - "8000:8000"
+
 volumes:
   db_data:
