@@ -26,6 +26,10 @@ def extract_lapresse():
             thumbnail = thumbnail.get("src") if thumbnail else None
             publish_date = a.find("span", class_="storyCard__publishedDate")
             publish_date = publish_date.text.strip() if publish_date else None
+            updated_date = a.find("span", class_="storyCard__modifiedDate")
+            updated_date = updated_date.text.strip() if updated_date else None
+            article_link = a.find("a", class_="storyCard__cover")
+            article_link = article_link.get("href") if article_link else None
             category_name = a.find("a", class_="badge--section-INT")
             category_name = cleanup_text(category_name.text.strip()) if category_name else None
 
@@ -35,6 +39,8 @@ def extract_lapresse():
             article.lead_text = cleanup_text(lead_text)
             article.thumbnail = thumbnail
             article.publish_date = cleanup_text(publish_date)
+            article.updated_at = cleanup_text(updated_date)
+            article.origin_url = url + article_link
 
             if category_name is not None and category_name != "":
                 category = create_get_category(category_name)

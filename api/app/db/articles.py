@@ -49,6 +49,8 @@ class Article(Base):
     lead_text = Column(String)
     thumbnail = Column(String)
     publish_date = Column(String)
+    updated_at = Column(String)
+    origin_url = Column(String)
     scrapped_at = Column(DateTime(timezone=True), default=func.now())
 
     categories = relationship(
