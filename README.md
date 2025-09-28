@@ -2,9 +2,8 @@
 
 A web platform that aggregates new from multiple sources and lets users filter articles by categories.
 
-## Colors
+## 🐳 Start services
 
-- FFECC0
-- FFC29B
-- F39F9F
-- B95E82
+First copy config: `cp .env.example .env`
+
+`docker compose --env-file .env up -d --build`
