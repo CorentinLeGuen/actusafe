@@ -18,17 +18,17 @@ services:
 
   app:
     build:
-      context: .
+      context: scrapper
       dockerfile: Dockerfile
     container_name: actusafe-scrapper
     depends_on:
       db:
         condition: service_healthy
-    working_dir: /app
+    working_dir: /scrapper/app
     environment:
       - DATABASE_URL=${DATABASE_URL}
     volumes:
-      - ./app:/app:rw
+      - ./scrapper/app:/scrapper/app:rw
 
 volumes:
   db_data:
