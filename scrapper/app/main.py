@@ -2,7 +2,7 @@ import requests
 from apscheduler.schedulers.blocking import BlockingScheduler
 from bs4 import BeautifulSoup
 
-from schema import Article, create_get_category, add_article, cleanup_text
+from schema import Article, create_get_category, add_article, cleanup_text, create_get_source
 
 
 def extract_lapresse():
@@ -39,6 +39,9 @@ def extract_lapresse():
             if category_name is not None and category_name != "":
                 category = create_get_category(category_name)
                 article.categories.append(category)
+
+            source = create_get_source(url)
+            article.source = source
 
             add_article(article)
 

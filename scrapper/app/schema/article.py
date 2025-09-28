@@ -24,6 +24,15 @@ article_category = Table(
 )
 
 
+class Source(Base):
+    __tablename__ = 'sources'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+
+    articles = relationship('Article', back_populates='source', lazy='dynamic')
+
+
 class Category(Base):
     __tablename__ = 'category'
 
@@ -50,6 +59,12 @@ class Article(Base):
         back_populates="articles",
     )
 
+    source_id = Column(Integer, ForeignKey('sources.id'), nullable=False, index=True)
+    source = relationship(
+        "Source",
+        back_populates="articles",
+    )
+
 
 Base.metadata.create_all(bind=engine)
 
@@ -68,6 +83,25 @@ def create_get_category(name: str) -> Category:
     except Exception:
         session.rollback()
         again = session.query(Category).filter_by(name=name).first()
+        if again:
+            return again
+        raise
+
+
+def create_get_source(name: str) -> Source:
+    existing = session.query(Source).filter_by(name=name).first()
+    if existing:
+        return existing
+
+    try:
+        new_source = Source(name=name)
+        session.add(new_source)
+        session.commit()
+        session.refresh(new_source)
+        return new_source
+    except Exception:
+        session.rollback()
+        again = session.query(Source).filter_by(name=name).first()
         if again:
             return again
         raise
