@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import {computed, onMounted, ref} from "vue";
-import {getArticles, getCategories} from "./api/http.ts";
-import type {Article, Category} from "./api/schemas.ts";
+import {getArticles, getCategories, getSources} from "./api/http.ts";
+import type {Article, Category, Source} from "./api/schemas.ts";
 
 const articles = ref<Article[]>([])
 const categories = ref<Category[]>([])
+const sources = ref<Source[]>([])
 const disabledCategories = ref<Set<string>>(new Set())
 const selectedOnly = ref<string | null>(null)
 
@@ -14,12 +15,20 @@ async function fetchArticles() {
 
 async function fetchCategories() {
   categories.value = (await getCategories()).sort((a, b) =>
-    a.name.localeCompare(b.name)
+      a.name.localeCompare(b.name)
   )
+}
+
+async function fetchSources() {
+  sources.value = (await getSources()).map(source => ({
+    ...source,
+    name: source.name.replace(/^https:\/\//, '').replace(/^http:\/\//, '')
+  }))
 }
 
 onMounted(async () => {
   await fetchCategories()
+  await fetchSources()
   await fetchArticles()
 })
 
@@ -44,7 +53,7 @@ const visibleArticles = computed(() => {
   }
   if (disabledCategories.value.size === 0) return articles.value
   return articles.value.filter(a =>
-    a.categories.every(c => !disabledCategories.value.has(c.name))
+      a.categories.every(c => !disabledCategories.value.has(c.name))
   )
 })
 
@@ -54,6 +63,10 @@ const visibleArticles = computed(() => {
   <div class="h-screen p-4">
     <h1 class="font-extrabold drop-shadow-sm/30 text-center text-8xl"><span class="text-transparent bg-clip-text bg-gradient-to-r to-[#FFC29B] from-[#B95E82]">ActuSafe</span></h1>
     <p class="text-center text-gray-700 font-extralight text-2xl mb-4">Les actualités en toute sécurité</p>
+    <div class="flex flex-justify-center flex-wrap mb-4 space-y-2 max-w-4/5 mx-auto">
+      <h2 class="me-8">Sources </h2>
+      <p v-for="source in sources" class="font-bold text-gray-600 me-4">{{ source.name }}</p>
+    </div>
     <div class="flex flex-justify-center flex-wrap mb-4 space-y-2 max-w-4/5 mx-auto">
       <button v-for="category in categories"
               :key="category.name"
@@ -66,8 +79,8 @@ const visibleArticles = computed(() => {
               ]"
               class="flex-auto text-center mx-1 bg-gray-100 text-gray-700 text-xs font-medium me-2 rounded-lg px-1 h-4.5 transition duration-200 ease-in-out hover:shadow hover:cursor-pointer hover:scale-150"
               title="Activer/Désactiver"
-            >
-        <span>{{category.name}}</span>
+      >
+        <span>{{ category.name }}</span>
       </button>
     </div>
     <div class="flex flex-wrap gap-2 justify-center justify-items-stretch">
@@ -75,8 +88,8 @@ const visibleArticles = computed(() => {
         <a :href="article.origin_url" target="_blank" class="flex flex-col h-full">
           <img v-if="article.thumbnail" :src="article.thumbnail" alt="Pas de thumbnail disponible" class="w-full rounded-t-xl h-[240px]">
           <div v-else class="flex flex-col items-center justify-center w-full rounded-t-xl h-[240px] bg-gray-100">
-            <img src="./assets/no-picture.svg" alt="" class="h-10 w-1/2" />
-            <p class="text-center text-sm italic text-gray-600">{{article.source.name}}</p>
+            <img src="./assets/no-picture.svg" alt="" class="h-10 w-1/2"/>
+            <p class="text-center text-sm italic text-gray-600">{{ article.source.name }}</p>
           </div>
           <p v-for="category in article.categories" :key="category.name" class="text-sm my-2"><span class="px-2 py-0.5 text-xs rounded bg-[#FFECC0] text-gray-500">{{ category.name }}</span></p>
           <p class="text-sm italic text-gray-500">{{ article.subtitle }}</p>

@@ -80,8 +80,16 @@ def get_stored_articles():
         .all()
     )
 
+
 def get_stored_categories():
     return (
         session.query(Category)
+        .all()
+    )
+
+
+def get_stored_sources():
+    return (
+        session.query(Source)
         .all()
     )
