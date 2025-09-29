@@ -12,7 +12,9 @@ async function fetchArticles() {
 }
 
 async function fetchCategories() {
-  categories.value = await getCategories()
+  categories.value = (await getCategories()).sort((a, b) =>
+    a.name.localeCompare(b.name)
+  )
 }
 
 onMounted(async () => {
