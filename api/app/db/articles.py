@@ -76,5 +76,12 @@ def get_stored_articles():
             joinedload(Article.source),
             joinedload(Article.categories),
         )
+        .order_by(Article.scrapped_at.desc())
+        .all()
+    )
+
+def get_stored_categories():
+    return (
+        session.query(Category)
         .all()
     )

@@ -1,3 +1,5 @@
+import re
+
 import requests
 from apscheduler.schedulers.blocking import BlockingScheduler
 from bs4 import BeautifulSoup
@@ -30,7 +32,8 @@ def extract_lapresse():
             updated_date = updated_date.text.strip() if updated_date else None
             article_link = a.find("a", class_="storyCard__cover")
             article_link = article_link.get("href") if article_link else None
-            category_name = a.find("a", class_="badge--section-INT")
+            category_pattern = re.compile(r'\bbadge--section-[A-Z]{3,4}\b')
+            category_name = a.find("a", class_=category_pattern)
             category_name = cleanup_text(category_name.text.strip()) if category_name else None
 
             article = Article()
@@ -40,7 +43,7 @@ def extract_lapresse():
             article.thumbnail = thumbnail
             article.publish_date = cleanup_text(publish_date)
             article.updated_at = cleanup_text(updated_date)
-            article.origin_url = url + article_link
+            article.origin_url = article_link
 
             if category_name is not None and category_name != "":
                 category = create_get_category(category_name)

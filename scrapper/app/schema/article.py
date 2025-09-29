@@ -112,6 +112,16 @@ def create_get_source(name: str) -> Source:
 def add_article(article: Article):
     existing = session.query(Article).filter_by(article_name=article.article_name).first()
     if existing:
+        # update existing article
+        existing.article_name = article.article_name
+        existing.subtitle = article.subtitle
+        existing.lead_text = article.lead_text
+        existing.thumbnail = article.thumbnail
+        existing.publish_date = article.publish_date
+        existing.updated_at = article.updated_at
+        existing.origin_url = article.origin_url
+        existing.categories = article.categories
+        session.commit()
         return
     try:
         session.add(article)
