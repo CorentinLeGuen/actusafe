@@ -6,6 +6,7 @@ import type {Article, Category} from "./api/schemas.ts";
 const articles = ref<Article[]>([])
 const categories = ref<Category[]>([])
 const disabledCategories = ref<Set<string>>(new Set())
+const selectedOnly = ref<string | null>(null)
 
 async function fetchArticles() {
   articles.value = await getArticles()
@@ -23,14 +24,24 @@ onMounted(async () => {
 })
 
 function toggleCategory(name: string) {
-  const s = disabledCategories.value
-  if (s.has(name)) s.delete(name)
-  else s.add(name)
+  if (selectedOnly.value) {
+    selectedOnly.value = null
+  }
+  const s = new Set(disabledCategories.value)
+  s.has(name) ? s.delete(name) : s.add(name)
+  disabledCategories.value = s
+}
 
-  disabledCategories.value = new Set(s)
+function selectOnly(name: string) {
+  selectedOnly.value = name
+  disabledCategories.value = new Set()
 }
 
 const visibleArticles = computed(() => {
+  if (selectedOnly.value) {
+    const only = selectedOnly.value
+    return articles.value.filter(a => a.categories.some(c => c.name === only))
+  }
   if (disabledCategories.value.size === 0) return articles.value
   return articles.value.filter(a =>
     a.categories.every(c => !disabledCategories.value.has(c.name))
@@ -47,7 +58,12 @@ const visibleArticles = computed(() => {
       <button v-for="category in categories"
               :key="category.name"
               @click="toggleCategory(category.name)"
-              :class="disabledCategories.has(category.name) ? 'line-through' : ''"
+              @dblclick.prevent="selectOnly(category.name)"
+              :class="[
+                selectedOnly === category.name ? 'bg-green-600 text-white' :
+                disabledCategories.has(category.name) ? 'bg-gray-200 line-through' : 'text-gray-700',
+                ''
+              ]"
               class="flex-auto text-center mx-1 bg-gray-100 text-gray-700 text-xs font-medium me-2 rounded-lg px-1 h-4.5 transition duration-200 ease-in-out hover:shadow hover:cursor-pointer hover:scale-150"
               title="Activer/Désactiver"
             >
