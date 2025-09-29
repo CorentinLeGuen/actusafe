@@ -48,26 +48,30 @@ const visibleArticles = computed(() => {
               :key="category.name"
               @click="toggleCategory(category.name)"
               :class="disabledCategories.has(category.name) ? 'line-through' : ''"
-              class="flex-auto text-center mx-1 bg-gray-100 text-gray-700 text-xs font-medium me-2 rounded-lg px-1 h-4.5 hover:cursor-pointer"
+              class="flex-auto text-center mx-1 bg-gray-100 text-gray-700 text-xs font-medium me-2 rounded-lg px-1 h-4.5 transition duration-200 ease-in-out hover:shadow hover:cursor-pointer hover:scale-150"
               title="Activer/Désactiver"
             >
         <span>{{category.name}}</span>
       </button>
     </div>
-    <div class="flex flex-wrap gap-2 justify-center">
+    <div class="flex flex-wrap gap-2 justify-center justify-items-stretch">
       <div v-for="article in visibleArticles" :key="article.origin_url" class="w-1/5 hover:cursor-pointer">
-        <a :href="article.origin_url" target="_blank">
+        <a :href="article.origin_url" target="_blank" class="flex flex-col h-full">
           <img v-if="article.thumbnail" :src="article.thumbnail" alt="Pas de thumbnail disponible" class="w-full rounded-t-xl h-[240px]">
           <div v-else class="flex flex-col items-center justify-center w-full rounded-t-xl h-[240px] bg-gray-100">
             <img src="./assets/no-picture.svg" alt="" class="h-10 w-1/2" />
             <p class="text-center text-sm italic text-gray-600">{{article.source.name}}</p>
           </div>
-          <h2 class="font-extrabold text-center text-xl">{{ article.article_name }}</h2>
-          <p class="text-sm text-gray-600">{{ article.subtitle }}</p>
-          <p class="text-gray-800">{{ article.lead_text }}</p>
-          <p v-for="category in article.categories" :key="category.name" class="text-sm"><span class="px-2 py-0.5 text-xs rounded bg-[#FFECC0] text-gray-500">{{ category.name }}</span></p>
-          <p class="text-xs text-right text-gray-400">{{ article.publish_date }}<span v-if="article.updated_at"> | {{ article.updated_at }}</span></p>
-          <p class="text-xs text-gray-400">{{ article.source.name }}</p>
+          <p v-for="category in article.categories" :key="category.name" class="text-sm my-2"><span class="px-2 py-0.5 text-xs rounded bg-[#FFECC0] text-gray-500">{{ category.name }}</span></p>
+          <p class="text-sm italic text-gray-500">{{ article.subtitle }}</p>
+          <h2 class="font-extrabold text-xl">{{ article.article_name }}</h2>
+          <p class="text-xs text-gray-700 my-2">{{ article.lead_text }}</p>
+          <div class="mt-auto"></div>
+          <div class="flex mt-4">
+            <p class="flex-none text-xs text-right text-gray-400">{{ article.publish_date }}<span v-if="article.updated_at"> | {{ article.updated_at }}</span></p>
+            <p class="grow"></p>
+            <p class="flex-none text-xs text-gray-400">{{ article.source.name }}</p>
+          </div>
         </a>
       </div>
     </div>
