@@ -34,7 +34,11 @@ onMounted(async () => {
     <div class="flex flex-wrap gap-2 justify-center">
       <div v-for="article in articles" class="w-1/5 hover:cursor-pointer">
         <a :href="article.origin_url" target="_blank">
-          <img :src="article.thumbnail" alt="Article thumbnail" class="w-full rounded-t-xl h-[240px]">
+          <img v-if="article.thumbnail" :src="article.thumbnail" alt="Pas de thumbnail disponible" class="w-full rounded-t-xl h-[240px]">
+          <div v-else class="flex flex-col items-center justify-center w-full rounded-t-xl h-[240px] bg-gray-100">
+            <img src="./assets/no-picture.svg" alt="" class="h-10 w-1/2" />
+            <p class="text-center text-sm italic text-gray-600">{{article.source.name}}</p>
+          </div>
           <h2 class="font-extrabold text-center text-xl">{{ article.article_name }}</h2>
           <p class="text-sm text-gray-600">{{ article.subtitle }}</p>
           <p class="text-gray-800">{{ article.lead_text }}</p>
