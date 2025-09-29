@@ -1,0 +1,64 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: actusafe-db
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U actusafe -d actusafe"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  scrapper:
+    build:
+      context: scrapper
+      dockerfile: Dockerfile
+    container_name: actusafe-scrapper
+    depends_on:
+      db:
+        condition: service_healthy
+    working_dir: /scrapper/app
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+    volumes:
+      - ./scrapper/app:/scrapper/app:rw
+
+  api:
+    build:
+      context: api
+      dockerfile: Dockerfile
+    container_name: actusafe-api
+    depends_on:
+      db:
+        condition: service_healthy
+    working_dir: /api/app
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+    volumes:
+      - ./api/app:/api/app:rw
+    ports:
+      - "8000:8000"
+
+  front:
+    image: node:22.20.0-alpine
+    container_name: actusafe-front
+    working_dir: /front
+    volumes:
+      - ./front:/front:rw
+    ports:
+      - "5173:5173"
+    command: sh -c "npm ci && npm run dev -- --host 0.0.0.0 --port 5173"
+    environment:
+      - VITE_API_BASE=http://localhost:8000
+    depends_on:
+      - api
+
+volumes:
+  db_data:

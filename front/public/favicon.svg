@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="135mm"
+   height="147.49998mm"
+   viewBox="0 0 135 147.49998"
+   version="1.1"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <g
+     id="layer1">
+    <path
+       id="rect1"
+       style="fill:#ffecc0;stroke-width:8.50892;stroke-linecap:round"
+       d="M 0,0 H 110 V 135 H 0 Z" />
+    <path
+       id="path1"
+       style="fill:#ffecc0;stroke-width:8.43706;stroke-linecap:round"
+       d="m 24.999996,135 a 12.5,12.5 0 0 1 -12.5,12.5 12.5,12.5 0 0 1 -12.5,-12.5 12.5,12.5 0 0 1 12.5,-12.5 12.5,12.5 0 0 1 12.5,12.5 z" />
+    <path
+       id="path1-3"
+       style="fill:#ffecc0;stroke-width:8.43706;stroke-linecap:round"
+       d="M 135,135 A 12.5,12.5 0 0 1 122.5,147.5 12.5,12.5 0 0 1 110,135 12.5,12.5 0 0 1 122.5,122.5 12.5,12.5 0 0 1 135,135 Z" />
+    <path
+       id="rect2"
+       style="fill:#ffecc0;stroke-width:11.9031;stroke-linecap:round"
+       d="M 12.499996,122.5 H 122.5 v 25 H 12.499996 Z" />
+    <path
+       id="path1-3-1"
+       style="fill:#ffc29b;stroke-width:8.43706;stroke-linecap:round"
+       d="M 135,135 A 12.5,12.5 0 0 1 122.5,147.5 12.5,12.5 0 0 1 110,135 12.5,12.5 0 0 1 122.5,122.5 12.5,12.5 0 0 1 135,135 Z" />
+    <path
+       id="rect2-3"
+       style="fill:#ffc29b;stroke-width:10.7668;stroke-linecap:round"
+       d="m 110,45 h 25 v 90 h -25 z" />
+    <rect
+       style="fill:#f39f9f;fill-opacity:1;stroke-width:5.90206;stroke-linecap:round"
+       id="rect3"
+       width="70"
+       height="12"
+       x="20"
+       y="20" />
+    <rect
+       style="fill:#f39f9f;fill-opacity:1;stroke-width:10.0797;stroke-linecap:round"
+       id="rect3-2"
+       width="70"
+       height="35"
+       x="20"
+       y="42" />
+    <rect
+       style="fill:#f39f9f;fill-opacity:1;stroke-width:3.86381;stroke-linecap:round"
+       id="rect3-6"
+       width="30"
+       height="12"
+       x="20"
+       y="87" />
+    <rect
+       style="fill:#f39f9f;fill-opacity:1;stroke-width:3.86381;stroke-linecap:round"
+       id="rect3-6-5"
+       width="30"
+       height="12"
+       x="20"
+       y="104" />
+    <rect
+       style="fill:#f39f9f;fill-opacity:1;stroke-width:3.86381;stroke-linecap:round"
+       id="rect3-6-5-9"
+       width="30"
+       height="12"
+       x="20"
+       y="121" />
+    <rect
+       style="fill:#f39f9f;fill-opacity:1;stroke-width:3.86381;stroke-linecap:round"
+       id="rect3-6-2"
+       width="30"
+       height="12"
+       x="60"
+       y="87" />
+    <rect
+       style="fill:#f39f9f;fill-opacity:1;stroke-width:3.86381;stroke-linecap:round"
+       id="rect3-6-5-93"
+       width="30"
+       height="12"
+       x="60"
+       y="104" />
+    <rect
+       style="fill:#f39f9f;fill-opacity:1;stroke-width:3.86381;stroke-linecap:round"
+       id="rect3-6-5-9-1"
+       width="30"
+       height="12"
+       x="60"
+       y="121" />
+  </g>
+</svg>

@@ -1,0 +1,13 @@
+# web
+requests~=2.32.5
+beautifulsoup4~=4.14.0
+
+# data
+sqlalchemy~=2.0.43
+psycopg2-binary~=2.9.10
+
+# scheduler
+apscheduler~=3.11.0
+
+# env
+python-dotenv~=1.1.1
